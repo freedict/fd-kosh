@@ -72,8 +72,6 @@ def generate_mapping_files(path_to_freedicts):
 
 
 def main():
-    # print command line arguments
-    # sript's name sys.argv[0]='generate_kosh_files.py'
 
     path_to_freedicts = sys.argv[1]
 
