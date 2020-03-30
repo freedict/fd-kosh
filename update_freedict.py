@@ -134,7 +134,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('path_to_freedict', help='path to freedicts files')
+    parser.add_argument('path_to_freedict', help='path to freedict files')
     parser.add_argument("--init", help="initial download from freedict.org",
                         action="store_true")
     args = parser.parse_args()
