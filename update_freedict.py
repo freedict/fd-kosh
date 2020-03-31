@@ -49,9 +49,10 @@ def get_local_freedict(local_freedict):
 
 def get_dict_from_upstream(path_to_local_files, upstream_freedict, dict_id):
     tarname = os.path.join(path_to_local_files, "{}.tar.gz".format(dict_id))
-    tardata, headers = urllib.request.urlretrieve(upstream_freedict.get(dict_id).get('url'), filename=tarname)
+    tardata, headers = urllib.request.urlretrieve(upstream_freedict.get(dict_id).get('url'), tarname)
     # untar
     shutil.unpack_archive(tardata, extract_dir=path_to_local_files)
+    os.remove(tarname)
 
 
 def get_freedict_list_from_upstream(freedict_url):
