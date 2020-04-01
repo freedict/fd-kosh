@@ -11,7 +11,7 @@ Requirements: python3
 ### Initialization
 
 For downloading the complete freedict collection (currently 149 dictionaries (31 March 2020)) and creating Kosh files 
-for each dictionary you must execute:
+for each dictionary execute:
 
 `bash update_freedict.sh /ABS_PATH_TO/fd-kosh`
 
@@ -111,7 +111,7 @@ For example: `http://localhost:5000/api/lat_eng/restful`
 If you want to search for all the Latin headwords that start with 'aba'. Make a 'prefix' query. The query's URL should look like this:
 `http://localhost:5000/api/lat_eng/restful/entries?field=headword&query=aba&query_type=prefix`
 
-###### 3.1 GraphQL APIs
+###### 3.2 GraphQL APIs
 
 You can access a Swagger UI for each dataset on your computer/server: `http://localhost:5000/api/DATASET_ID/graphql`
 
