@@ -1,4 +1,4 @@
-# fd-watch
+# fd-kosh   
 
 This repository contains scripts that allow you to: 
 - Download and maintain an up-to-date local version of the [freedict database](https://freedict.org/freedict-database.json).
@@ -13,9 +13,9 @@ Requirements: python3
 For downloading the complete freedict collection (currently 149 dictionaries (31 March 2020)) and creating Kosh files 
 for each dictionary execute:
 
-`bash update_freedict.sh /ABS_PATH_TO/fd-kosh`
+`bash update_freedict.sh /ABS_PATH_TO/fd-kosh_data`
 
-Where `/ABS_PATH_TO/fd-kosh` can be any directory where you want to download the data and save the Kosh files.
+Where `/ABS_PATH_TO/fd-kosh_data` can be any directory where you want to download the data and save the Kosh files.
 
 Is not mandatory to create the directory in advance. It can be empty too.
 
@@ -39,14 +39,14 @@ After this procedure every subdirectory should look like this:
 ```
 `.kosh` and `kosh_DATASET_ID_mapping.json` are required by Kosh to create APIs for each dataset.
 
-In `/ABS_PATH_TO/fd-kosh` you should find a copy of the freedict database: `freedict-database.json`
+In `/ABS_PATH_TO/fd-kosh_data` you should find a copy of the freedict database: `freedict-database.json`
 
 ### Update
 
 `update_freedict.py` compares the local and upstream checksums of each dictionary. 
 To check for updates you only need to execute the same command as when you are downloading the freedicts for the first time:
 
-`bash update_freedict.sh /ABS_PATH_TO/fd-kosh`
+`bash update_freedict.sh /ABS_PATH_TO/fd-kosh_data`
 
 In order to automatically check for updates, in Unix-like systems you could create a `cron` job:
 
@@ -56,7 +56,7 @@ In order to automatically check for updates, in Unix-like systems you could crea
 # For more information see the manual pages of crontab(5) and cron(8)
 #
 # m h  dom mon dow   command
-00 23 * * * bash /ABS_PATH_TO/fd-watch/update_freedict.sh /ABS_PATH_TO/fd-kosh
+00 23 * * * bash /ABS_PATH_TO/fd-watch/update_freedict.sh /ABS_PATH_TO/fd-kosh_data
 
 ```
 
@@ -79,11 +79,11 @@ deploy Kosh with Docker. Therefore it is recommended to install [Docker](https:/
 
 You need to provide in `docker-compose.local.yml` the path to your local copy of the freedict:
 
-`volumes: ['/ABS_PATH_TO/fd-kosh:/var/lib/kosh:ro']`
+`volumes: ['/ABS_PATH_TO/fd-kosh_data:/var/lib/kosh:ro']`
 
 Keep in mind that indexing 149 datasets will not be a fast task. For testing purposes, first deploy only a single dataset:
 
-`volumes: ['/ABS_PATH_TO/fd-kosh/afr-deu:/var/lib/kosh:ro']`
+`volumes: ['/ABS_PATH_TO/fd-kosh_data/afr-deu:/var/lib/kosh:ro']`
 
 Then execute:
 
