@@ -134,7 +134,7 @@ the freedict collection with `fd-watch`, Kosh will automatically update the resp
  
  
 ### Bugs, Questions?
-For more information about Kosh, please visit https://kosh.uni-koeln.de. If you have found a bug in `fd-watch`, please, write an issue. You can also contact me via email: f.mondaca[at]uni-koeln.de
+For more information about Kosh, please visit https://kosh.uni-koeln.de. If you have found a bug in `fd-watch`, please write an issue. You can also contact me via email: f.mondaca[at]uni-koeln.de
 
 
 
