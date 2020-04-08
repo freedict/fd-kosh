@@ -6,12 +6,12 @@
 if [ -d "${1}" ]; then
   #if empty
   if [ -z "$(ls -A ${1})" ]; then
-    python update_freedict.py ${1} --init
+    python3 update_freedict.py ${1} --init
   else
-    python update_freedict.py ${1}
+    python3 update_freedict.py ${1}
   fi
 else
-  #if dir does not exists
+  #if dir does not exist
   mkdir -p ${1}
-  python update_freedict.py ${1} --init
+  python3 update_freedict.py ${1} --init
 fi
