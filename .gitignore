@@ -1,0 +1,6 @@
+*log
+*.conf
+*.path
+*.service
+.idea
+__pycache__
