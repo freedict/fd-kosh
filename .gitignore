@@ -1,6 +1,3 @@
-*log
-*.conf
-*.path
-*.service
-.idea
+update_freedict.log
 __pycache__
+.idea
