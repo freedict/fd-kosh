@@ -14,15 +14,16 @@ Optionally (if wanted): docker, docker-compose
 
 Usage
 -----
-
+## HTTP Access
 ### Initialization
 
 For downloading the complete freedict collection (more than 150 dictionaries,
 April 2020) and creating Kosh files for each dictionary execute:
 
-    bash update_freedict.sh /ABS_PATH_TO/fd-kosh_data
+    python3 update_freedict.py /ABS_PATH_TO/fd-kosh_data --init
 
-Where `/ABS_PATH_TO/fd-kosh_data` can be any directory where you want to download the data and save the Kosh files to. The directory will be created if not present.
+Where `/ABS_PATH_TO/fd-kosh_data` can be any directory where you want to download and decompress the data and save the Kosh files to. 
+The directory will be created if not present.
 After this, every subdirectory should look like this:
 
 ```
@@ -49,15 +50,15 @@ In `/ABS_PATH_TO/fd-kosh_data` you should find a copy of the freedict database: 
 ### Updating the Dictionary Database
 
 `update_freedict.py` compares the local and upstream checksums of each dictionary. 
-To check for updates you only need to execute the same command as when you are downloading the freedicts for the first time:
+To check for updates you only need to execute the almost the command as when you are downloading the freedicts for the first time. 
+The only difference here is that you do not have to add the `--init` option.
 
-    bash update_freedict.sh /ABS_PATH_TO/fd-kosh_data
+    python3 update_freedict.py /ABS_PATH_TO/fd-kosh_data
 
 #### Automatic updates
 
-Updates of the FreeDict database can be checked automatically by either a
-Cronjob or a systemd path file. The system path unit can be found in the
-[systemd directory](systemd). The Cron job can be created as follows:
+Updates of the FreeDict database can be checked automatically with a 
+Cronjob. The Cron job can be created as follows:
 
 1. `crontab -e` to open the Cron configuration in your editor.
 2. To check for updates daily at 23:00: 
@@ -65,7 +66,7 @@ Cronjob or a systemd path file. The system path unit can be found in the
     ```
     # For more information see the manual pages of crontab(5) and cron(8)
     # m h  dom mon dow   command
-    00 23 * * * bash /ABS_PATH_TO/fd-kosh/update_freedict.sh /ABS_PATH_TO/fd-kosh_data
+    00 23 * * * cd /ABS_PATH_TO/fd-kosh && /usr/bin/python3 /ABS_PATH_TO/fd-kosh/update_freedict.py /ABS_PATH_TO/fd-kosh_data
     ```
 3.  In the log file `fd-kosh/update_freedict.log` you will see which datasets have been updated.
 
@@ -78,6 +79,7 @@ Each API can be tested via a dedicated UI: a Swagger UI for each REST API and Gr
 1.  Download Kosh
 
         git clone https://github.com/cceh/kosh.git
+        
 2.  Deploy Kosh
 
     Kosh requires elasticsearch. In order to avoid downloading and installing
@@ -138,7 +140,30 @@ Each API can be tested via a dedicated UI: a Swagger UI for each REST API and Gr
 
     Per default Kosh updates a dataset's index if a related file has been
     modified. Therefore, if you automatically update the freedict collection
-    with `fd-watch`, Kosh will automatically update the respective index. 
+    with `fd-kosh`, Kosh will automatically update the respective index. 
+    
+    
+    
+## Local Access
+
+When deploying Kosh within the freedict infrastructure there are a couple of modifications to be done to the above described steps.
+
+### Initialization
+
+For decompressing the XML files and generating the Kosh files, add the `--local` option:
+
+`python3 update_freedict.py /ABS_PATH_TO/fd-kosh_data --init --local`
+
+### Automatically updating and decompressing the XML files if freedict-database.json is modified
+
+At `fd-kosh/path_unit_files` you will find `freedict_sync.service` and `freedict_sync.path`. 
+Modify paths if required and add both files to `/etc/systemd/system/`
+Then execute:
+```
+sudo systemctl enable freedict_sync.{path,service}
+sudo systemctl start freedict_sync.path
+```
+
  
 ### Bugs, Questions?
 
