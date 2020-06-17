@@ -1,0 +1,12 @@
+[Unit]
+Description=service for freedict_sync.path
+
+[Service]
+Type=simple
+# WorkingDirectory=PATH_TO_FD-KOSH
+WorkingDirectory=/home/francisco/repositories/freedict/fd-kosh
+# ExecStart=PATH_TO_PYTHON3 PATH_TO/fd-kosh/update_freedict.py PATH_TO_DECOMPRESSED_FREEDICT_XML_FILES --local
+ExecStart=/usr/bin/python3 /home/francisco/repositories/freedict/fd-kosh/update_freedict.py /home/francisco/repositories/freedict/fd-kosh_data_server --local
+
+[Install]
+WantedBy=multi-user.target
